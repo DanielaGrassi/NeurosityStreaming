@@ -80,6 +80,7 @@ def save_data(filename, data):
     with open(filename, "a") as file:
         file.write(f"{json.dumps(data)}")
 
+
 def save_and_zip_data():
     print("Saving data to files...")  # Debug statement
     files_to_zip = []
@@ -102,7 +103,6 @@ def save_and_zip_data():
         print(f"Data successfully saved to {zip_filename}")  # Debug statement
     else:
         print("No data to save.")  # Debug statement
-
 
 
 def data_callback(data_type, data):
