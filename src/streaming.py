@@ -5,6 +5,7 @@ import zipfile
 import time
 import signal
 from neurosity import NeurositySDK  
+from datetime import datetime
 
 CONFIG_FILE = "config.json"
 
@@ -79,7 +80,6 @@ def save_data(filename, data):
     with open(filename, "a") as file:
         file.write(f"{json.dumps(data)}")
 
-# Function to save and zip all data
 def save_and_zip_data():
     print("Saving data to files...")  # Debug statement
     files_to_zip = []
@@ -87,20 +87,24 @@ def save_and_zip_data():
     for data_type, data in data_store.items():
         if data:  # Only save non-empty data lists
             save_data(f"{data_type}.json", data)
-            #create_json_file(f"{data_type}.json")
             files_to_zip.append(f"{data_type}.json")
+
+    # Generate zip filename using the device ID, current date, and time
+    timestamp = datetime.now().strftime('%Y-%m-%d_%H_%M')
+    zip_filename = f"{device_id}_{timestamp}.zip"
 
     # Create a zip file containing all data files
     if files_to_zip:
-        with zipfile.ZipFile("neurosity_data.zip", "w") as zipf:
+        with zipfile.ZipFile(zip_filename, "w") as zipf:
             for file in files_to_zip:
                 zipf.write(file)
                 os.remove(file)  # Delete the file after adding it to the zip
-        print("Data successfully saved to neurosity_data.zip")  # Debug statement
+        print(f"Data successfully saved to {zip_filename}")  # Debug statement
     else:
         print("No data to save.")  # Debug statement
 
-# Callback functions
+
+
 def data_callback(data_type, data):
     data_store[data_type].append(data)
     data_counters[data_type] += 1
@@ -112,7 +116,7 @@ def data_callback(data_type, data):
 # Function to start streaming
 def start_streaming():
 
-    global unsubscribe_brainwaves, unsubscribe_calm, unsubscribe_focus, unsubscribe_power_by_band, unsubscribe_status
+    global unsubscribe_brainwaves, unsubscribe_calm, unsubscribe_focus, unsubscribe_power_by_band, unsubscribe_status, device_id
     config = load_config()
     email, password, device_id = validate_config(config)
     sdk = create_sdk_instance(device_id)
