@@ -31,7 +31,7 @@ Super simple app to collect data from Neurosity Crown device
      .\venv\Scripts\activate
      ```
 
-## Installing PyQt5
+## Installing requirements
 
 With the virtual environment activated, install the required libraries with the following command:
 
