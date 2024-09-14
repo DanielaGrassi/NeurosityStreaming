@@ -1,6 +1,6 @@
 # Crown Recorder
 
-App description goes here.
+Super simple app to collect data from Neurosity Crown device
 
 ## Prerequisites
 
