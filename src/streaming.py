@@ -2,10 +2,10 @@ import json
 import os
 import sys
 import zipfile
-import time
 import signal
 from neurosity import NeurositySDK  
 from datetime import datetime
+
 
 CONFIG_FILE = "config.json"
 
@@ -88,8 +88,18 @@ def save_and_zip_data():
     for data_type, data in data_store.items():
         if data:  # Only save non-empty data lists
             save_data(f"{data_type}.json", data)
+            with open(f"{data_type}.json", "r+") as file:
+                file.seek(0, os.SEEK_END)  # Move to the end of the file
+                file.seek(file.tell() - 1, 0)  # Move one character back to the last comma
+                last_char = file.read(1)   # Read the last character (should be a comma)
+            
+            with open(f"{data_type}.json", "r+") as file:
+                if last_char == ",":
+                    file.seek(file.tell() - 1, 0) 
+                    file.truncate() 
+    
+                    file.write("]")
             files_to_zip.append(f"{data_type}.json")
-
     # Generate zip filename using the device ID, current date, and time
     timestamp = datetime.now().strftime('%Y-%m-%d_%H_%M')
     zip_filename = f"{device_id}_{timestamp}.zip"
