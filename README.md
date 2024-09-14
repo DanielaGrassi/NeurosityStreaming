@@ -13,44 +13,45 @@ Super simple app to collect data from Neurosity Crown device
 2. Navigate to the project directory where `CrownRecorder.py` is located.
 3. Create a virtual environment with the following command:
 
-    ```sh
-    python3 -m venv venv
-    ```
+   ```sh
+   python3 -m venv venv
+   ```
 
 4. Activate the virtual environment:
 
-    - On macOS and Linux:
+   - On macOS and Linux:
 
-        ```sh
-        source venv/bin/activate
-        ```
+     ```sh
+     source venv/bin/activate
+     ```
 
-    - On Windows:
+   - On Windows:
 
-        ```sh
-        .\venv\Scripts\activate
-        ```
+     ```sh
+     .\venv\Scripts\activate
+     ```
 
 ## Installing PyQt5
 
-With the virtual environment activated, install PyQt5 using pip:
+With the virtual environment activated, install the required libraries with the following command:
 
 ```sh
-pip install PyQt5
+pip install -r requirements.txt
 ```
 
 ## Set the config.json
 
-1. Go to https://console.neurosity.co/settings.
-2. Select your device by choosing its ID from the available options.
-3. Go to settings
-4. Copy the device code.
-5. Open the config.json file and paste the device code into the appropriate field.
+1. Copy the `example.config.json` file and rename it to `config.json`.
+2. Go to https://console.neurosity.co/settings.
+3. Select your device by choosing its ID from the available options.
+4. Go to settings
+5. Copy the device code.
+6. Open the config.json file and paste the device code into the appropriate field, along with your Neurosity account email and password.
 
 ## Running the App
 
 With the virtual environment activated, run the app with the following command:
 
 ```sh
-python CrownRecorder.py
+python src/CrownRecorder.py
 ```
